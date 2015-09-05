@@ -116,7 +116,6 @@ class WechatBasic(WechatBase):
         :param data: HTTP Request 的 Body 数据
         :raises ParseError: 解析微信服务器数据错误, 数据不合法
         """
-        result = {}
         if type(data) == unicode:
             data = data.encode('utf-8')
         elif type(data) == str:

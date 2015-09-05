@@ -1,0 +1,18 @@
+site_name: wechat-python-sdk 文档
+theme: readthedocs
+theme_dir: 'theme'
+
+extra:
+  'version': 'v0.6.2 (20150905)'
+
+pages:
+  - '首页': 'index.md'
+  - '安装': 'install.md'
+  - '快速教程': 'quickstart.md'
+  - '订阅号/服务号文档': 'subscribe_service.md'
+  - '企业号文档': 'corp.md'
+  - '扩展功能文档': 'ext.md'
+  - '常见问题': 'faq.md'
+  - '关于':
+    - '关于项目': 'about/project.md'
+    - '关于作者': 'about/author.md'
