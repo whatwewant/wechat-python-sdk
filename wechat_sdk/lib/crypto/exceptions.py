@@ -2,6 +2,7 @@
 
 from wechat_sdk.exceptions import WechatSDKException
 
+
 class CryptoException(WechatSDKException):
     """加密解密异常基类"""
     pass

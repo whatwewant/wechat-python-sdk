@@ -2,7 +2,7 @@
 
 import hashlib
 
-from wechat_sdk.crypto.exceptions import CryptoComputeSignatureError
+from wechat_sdk.lib.crypto.exceptions import CryptoComputeSignatureError
 
 
 def get_sha1_signature(token, timestamp, nonce, encrypt):

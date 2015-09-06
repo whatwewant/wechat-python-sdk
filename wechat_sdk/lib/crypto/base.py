@@ -5,10 +5,11 @@ import string
 import random
 import struct
 import socket
+
 from Crypto.Cipher import AES
 
-from wechat_sdk.crypto.pkcs7 import PKCS7Encoder
-from wechat_sdk.crypto.exceptions import EncryptAESError, DecryptAESError, IllegalBuffer, ValidateAppIDError
+from wechat_sdk.lib.crypto.pkcs7 import PKCS7Encoder
+from wechat_sdk.lib.crypto.exceptions import EncryptAESError, DecryptAESError, IllegalBuffer, ValidateAppIDError
 
 
 class BaseCrypto(object):

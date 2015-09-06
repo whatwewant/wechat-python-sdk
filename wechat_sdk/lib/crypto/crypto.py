@@ -7,9 +7,9 @@ import six
 import xmltodict
 
 from wechat_sdk.exceptions import ParseError
-from wechat_sdk.crypto.base import BaseCrypto
-from wechat_sdk.crypto.utils import get_sha1_signature
-from wechat_sdk.crypto.exceptions import ValidateSignatureError, ValidateAESKeyError, DecryptAESError
+from wechat_sdk.lib.crypto.base import BaseCrypto
+from wechat_sdk.lib.crypto.utils import get_sha1_signature
+from wechat_sdk.lib.crypto.exceptions import ValidateSignatureError, ValidateAESKeyError, DecryptAESError
 from wechat_sdk.utils import to_binary, to_text
 
 
@@ -95,34 +95,3 @@ class WechatBaseCrypto(object):
             raise ValidateSignatureError()
         pc = BaseCrypto(self.__key)
         return pc.decrypt(encrypt, self.__id)
-
-
-class WechatCrypto(WechatBaseCrypto):
-    """微信普通公众号(订阅/服务号)加密解密类"""
-
-    def __init__(self, token, encoding_aes_key, app_id):
-        super(WechatCrypto, self).__init__(token, encoding_aes_key, app_id)
-        self.__app_id = app_id
-
-    def encrypt_message(self, msg, nonce, timestamp=None):
-        return self._encrypt_message(msg, nonce, timestamp)
-
-    def decrypt_message(self, msg, msg_signature, timestamp, nonce):
-        return self._decrypt_message(msg, msg_signature, timestamp, nonce)
-
-
-class WechatCorpCrypto(WechatBaseCrypto):
-    """微信企业号加密解密类"""
-
-    def __init__(self, token, encoding_aes_key, corp_id):
-        super(WechatCorpCrypto, self).__init__(token, encoding_aes_key, corp_id)
-        self.__corp_id = corp_id
-
-    def check_signature(self, msg_signature, timestamp, nonce, echostr):
-        return self._check_signature(msg_signature, timestamp, nonce, echostr)
-
-    def encrypt_message(self, msg, nonce, timestamp=None):
-        return self._encrypt_message(msg, nonce, timestamp)
-
-    def decrypt_message(self, msg, msg_signature, timestamp, nonce):
-        return self._decrypt_message(msg, msg_signature, timestamp, nonce)
