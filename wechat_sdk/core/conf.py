@@ -59,10 +59,7 @@ class WechatConf(object):
 
         self.__encoding_aes_key = kwargs.get('encoding_aes_key')
         self.__crypto = None
-        if self.__encoding_aes_key is not None:
-            if self.__token is None or self.__appid is None:
-                raise NeedParamError('Please provide token and appid parameters in the construction of class.')
-            self.__crypto = BasicCrypto(self.__token, self.__encoding_aes_key, self.__appid)
+        self._update_crypto()
 
         self.__access_token_getfunc = kwargs.get('access_token_getfunc')
         self.__access_token_setfunc = kwargs.get('access_token_setfunc')
@@ -77,3 +74,93 @@ class WechatConf(object):
         self.__partnerid = kwargs.get('partnerid')
         self.__partnerkey = kwargs.get('partnerkey')
         self.__paysignkey = kwargs.get('paysignkey')
+
+    @property
+    def token(self):
+        return self.__token
+
+    @token.setter
+    def token(self, token):
+        self.__token = token
+        self._update_crypto()  # 改动 Token 需要重新更新 Crypto
+
+    @property
+    def appid(self):
+        return self.__appid
+
+    @appid.setter
+    def appid(self, appid):
+        self.__appid = appid
+        self._update_crypto()  # 改动 App ID 需要重新更新 Crypto
+
+    @property
+    def appsecret(self):
+        return self.__appsecret
+
+    @appsecret.setter
+    def appsecret(self, appsecret):
+        self.__appsecret = appsecret
+
+    @property
+    def encoding_aes_key(self):
+        return self.__encoding_aes_key
+
+    @encoding_aes_key.setter
+    def encoding_aes_key(self, encoding_aes_key):
+        self.__encoding_aes_key = encoding_aes_key
+        self._update_crypto()  # 改动 EncodingAESKey 需要重新更新 Crypto
+
+    @property
+    def crypto(self):
+        return self.__crypto
+
+    @property
+    def access_token(self):
+        if callable(self.__access_token_getfunc):
+            return self.__access_token_getfunc()
+
+        # TODO: 非分布式环境下的逻辑
+
+    @access_token.setter
+    def access_token(self, access_token):
+        if callable(self.__access_token_setfunc):
+            self.__access_token_setfunc(access_token)
+
+        # TODO: 非分布式环境下的逻辑
+
+    @property
+    def jsapi_ticket(self):
+        if callable(self.__jsapi_ticket_getfunc):
+            return self.__jsapi_ticket_getfunc()
+
+        # TODO: 非分布式环境下的逻辑
+
+    @jsapi_ticket.setter
+    def jsapi_ticket(self, jsapi_ticket):
+        if callable(self.__jsapi_ticket_setfunc):
+            self.__jsapi_ticket_setfunc(jsapi_ticket)
+
+        # TODO: 非分布式环境下的逻辑
+
+    @property
+    def partnerid(self):
+        return self.__partnerid
+
+    @property
+    def partnerkey(self):
+        return self.__partnerkey
+
+    @property
+    def paysignkey(self):
+        return self.__paysignkey
+
+    def _update_crypto(self):
+        """
+        根据当前配置内容更新 Crypto 类
+        """
+        if self.__encoding_aes_key is not None:
+            if self.__token is None or self.__appid is None:
+                raise NeedParamError('Please provide token and appid parameters in the construction of class.')
+            self.__crypto = BasicCrypto(self.__token, self.__encoding_aes_key, self.__appid)
+        else:
+            self.__crypto = None

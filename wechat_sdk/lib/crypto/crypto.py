@@ -25,7 +25,7 @@ class WechatBaseCrypto(object):
         """
         self.__key = base64.b64decode(encoding_aes_key + '=')
         if len(self.__key) != 32:
-            raise ValidateAESKeyError(self.__key)
+            raise ValidateAESKeyError(encoding_aes_key)
         self.__token = token
         self.__id = _id
 
