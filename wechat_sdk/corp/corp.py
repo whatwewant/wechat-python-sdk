@@ -10,10 +10,10 @@ from StringIO import StringIO
 from wechat_sdk.base import WechatBase
 from wechat_sdk.corp.messages import MESSAGE_TYPES, UnknownMessage
 from wechat_sdk.corp.exceptions import CorpSignatureError, CorpStateError, CorpUserManagementError
-from wechat_sdk.crypto import WechatCorpCrypto
-from wechat_sdk.crypto.exceptions import ValidateSignatureError
+from wechat_sdk.corp.crypto import CorpCrypto
+from wechat_sdk.lib.crypto.exceptions import ValidateSignatureError
 from wechat_sdk.exceptions import ParseError, NeedParseError, NeedParamError, OfficialAPIError
-from wechat_sdk.lib import XMLStore
+from wechat_sdk.lib.parser import XMLStore
 from wechat_sdk.corp.reply import TextReply, ImageReply, VideoReply, VoiceReply, ArticleReply, Article
 from wechat_sdk.utils import to_binary, to_text, disable_urllib3_warning
 
@@ -44,7 +44,7 @@ class WechatCorp(WechatBase):
         self.__secret = secret
         self.__encoding_aes_key = encoding_aes_key
         self.__agent_id = agent_id
-        self.__crypto = WechatCorpCrypto(self.__token, self.__encoding_aes_key, self.__corpid)
+        self.__crypto = CorpCrypto(self.__token, self.__encoding_aes_key, self.__corpid)
 
         self.__access_token = access_token
         self.__access_token_expires_at = access_token_expires_at

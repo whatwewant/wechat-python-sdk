@@ -8,11 +8,11 @@ import cgi
 from StringIO import StringIO
 
 from wechat_sdk.base import WechatBase
-from wechat_sdk.crypto import WechatCrypto
+from wechat_sdk.basic.crypto import BasicCrypto
 from wechat_sdk.messages import MESSAGE_TYPES, UnknownMessage
 from wechat_sdk.exceptions import ParseError, NeedParseError, NeedParamError, OfficialAPIError
 from wechat_sdk.reply import TextReply, ImageReply, VoiceReply, VideoReply, MusicReply, Article, ArticleReply
-from wechat_sdk.lib import XMLStore
+from wechat_sdk.lib.parser import XMLStore
 from wechat_sdk.utils import disable_urllib3_warning
 
 
@@ -60,7 +60,7 @@ class WechatBasic(WechatBase):
             if not token or not appid:
                 raise NeedParamError('Please provide token and appid parameters in the construction of class.')
             self.__encoding_aes_key = encoding_aes_key
-            self.__crypto = WechatCrypto(self.__token, self.__encoding_aes_key, self.__appid)
+            self.__crypto = BasicCrypto(self.__token, self.__encoding_aes_key, self.__appid)
 
         self.__is_parse = False
         self.__message = None
