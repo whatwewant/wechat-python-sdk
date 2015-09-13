@@ -26,7 +26,6 @@ class WechatRequest(object):
         :param access_token: access token 值, 如果初始化时传入 conf 会自动获取, 如果没有传入则请提供此值
         :param kwargs: 附加数据
         :return: 微信服务器响应的 JSON 数据
-        :raise HTTPError: 微信 api http 请求失败
         """
         if "params" not in kwargs:
             kwargs["params"] = {
@@ -47,31 +46,33 @@ class WechatRequest(object):
         self._check_official_error(response_json)
         return response_json
 
-    def get(self, url, **kwargs):
+    def get(self, url, access_token=None, **kwargs):
         """
         使用 GET 方法向微信服务器发出请求
         :param url: 请求地址
+        :param access_token: access token 值, 如果初始化时传入 conf 会自动获取, 如果没有传入则请提供此值
         :param kwargs: 附加数据
         :return: 微信服务器响应的 JSON 数据
-        :raise HTTPError: 微信 api http 请求失败
         """
         return self.request(
             method="get",
             url=url,
+            access_token=access_token,
             **kwargs
         )
 
-    def post(self, url, **kwargs):
+    def post(self, url, access_token=None, **kwargs):
         """
         使用 POST 方法向微信服务器发出请求
         :param url: 请求地址
+        :param access_token: access token 值, 如果初始化时传入 conf 会自动获取, 如果没有传入则请提供此值
         :param kwargs: 附加数据
-        :return: 微信服务器响应的 json 数据
-        :raise HTTPError: 微信 api http 请求失败
+        :return: 微信服务器响应的 JSON 数据
         """
         return self.request(
             method="post",
             url=url,
+            access_token=access_token,
             **kwargs
         )
 
