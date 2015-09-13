@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import os
 import json
+import time
 import unittest
 
 import xmltodict
@@ -11,31 +12,7 @@ from httmock import urlmatch, HTTMock, response
 
 from wechat_sdk.core.conf import WechatConf
 from wechat_sdk.exceptions import NeedParamError
-
-
-TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
-FIXTURE_PATH = os.path.join(TESTS_PATH, 'fixtures')
-
-
-@urlmatch(netloc=r'(.*\.)?api\.weixin\.qq\.com$')
-def wechat_api_mock(url, request):
-    path = url.path.replace('/cgi-bin/', '').replace('/', '_')
-    if path.startswith('_'):
-        path = path[1:]
-    res_file = os.path.join(FIXTURE_PATH, '%s.json' % path)
-    content = {
-        'errcode': 99999,
-        'errmsg': 'can not find fixture %s' % res_file,
-    }
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    try:
-        with open(res_file, 'rb') as f:
-            content = json.loads(f.read().decode('utf-8'))
-    except (IOError, ValueError) as e:
-        print(e)
-    return response(200, content, headers, request=request)
+from tests.utils import api_weixin_mock
 
 
 class CoreConfTestCase(unittest.TestCase):
@@ -44,9 +21,10 @@ class CoreConfTestCase(unittest.TestCase):
     appsecret = 'c994da14dca2047bb51caaedaf16f249'
     encoding_aes_key = 'ee5813b907f3e7f88b4561c5a59f6181304dc8e0bf9'
 
-    fixtures_access_token = 'zHuVUpxuvAij5rZYpDTZbN1PaN0zQL9Op1mJy9Yex-qN7aNT0Wk5sSK3nEXv8FBmg6H' \
-                            'bPwIuj-o5DR7nypN4BBkAk_CeZJVO7yUCgBPawsU'
-    fixtures_jsapi_ticket = ''
+    fixtures_access_token = 'HoVFaIslbrofqJgkR0Svcx2d4za0RJKa3H6A_NjzhBbm96Wtg_a3ifU' \
+                            'YQvOfJmV76QTcCpNubcsnOLmDopu2hjWfFeQSCE4c8QrsxwE_N3w'
+    fixtures_jsapi_ticket = 'bxLdikRXVbTPdHSM05e5u5sUoXNKd8-41ZO3MhKoyN5OfkWITDGgnr2' \
+                            'fwJ0m9E8NYzWKVZvdVtaUgWvsdshFKA'
 
     test_message = """<xml>
 <ToUserName><![CDATA[toUser]]></ToUserName>
@@ -64,6 +42,10 @@ class CoreConfTestCase(unittest.TestCase):
         self.assertIsNone(conf.appsecret)
         self.assertIsNone(conf.encoding_aes_key)
         self.assertIsNone(conf.crypto)
+        with self.assertRaises(NeedParamError):
+            getattr(conf, 'access_token')
+        with self.assertRaises(NeedParamError):
+            getattr(conf, 'jsapi_ticket')
 
     def test_init_with_token_and_appid_appsecret(self):
         conf = WechatConf(token=self.token, appid=self.appid, appsecret=self.appsecret)
@@ -72,6 +54,21 @@ class CoreConfTestCase(unittest.TestCase):
         self.assertEqual(conf.appsecret, self.appsecret)
         self.assertIsNone(conf.encoding_aes_key)
         self.assertIsNone(conf.crypto)
+        with HTTMock(api_weixin_mock):
+            access_token = conf.access_token
+            access_token_expires_at = int(time.time()) + 7200
+            self.assertEqual(access_token, self.fixtures_access_token)
+            self.assertEqual(conf._WechatConf__access_token, self.fixtures_access_token)
+            self.assertIn(conf._WechatConf__access_token_expires_at, [access_token_expires_at-1,
+                                                                      access_token_expires_at,
+                                                                      access_token_expires_at+1])
+            jsapi_ticket = conf.jsapi_ticket
+            jsapi_ticket_expires_at = int(time.time()) + 7200
+            self.assertEqual(jsapi_ticket, self.fixtures_jsapi_ticket)
+            self.assertEqual(conf._WechatConf__jsapi_ticket, self.fixtures_jsapi_ticket)
+            self.assertIn(conf._WechatConf__access_token_expires_at, [jsapi_ticket_expires_at-1,
+                                                                      jsapi_ticket_expires_at,
+                                                                      jsapi_ticket_expires_at+1])
 
     def test_init_with_encoding_aes_key(self):
         conf = WechatConf(token=self.token, appid=self.appid, appsecret=self.appsecret,
