@@ -24,6 +24,7 @@ class WechatConf(object):
                        'appid': App ID
                        'appsecret': App Secret
 
+                       'encrypt_mode': 加解密模式 ('normal': 明文模式, 'compatible': 兼容模式, 'safe': 安全模式(默认))
                        'encoding_aes_key': EncodingAESKey 值 (传入此值必须保证同时传入 token, appid, 否则抛出异常)
 
                        'access_token_getfunc': access token 获取函数 (用于分布式环境下, 具体格式参见文档, 无特殊需要则不需传入)
@@ -62,6 +63,7 @@ class WechatConf(object):
         self.__appid = kwargs.get('appid')
         self.__appsecret = kwargs.get('appsecret')
 
+        self.__encrypt_mode = kwargs.get('encrypt_mode', 'safe')
         self.__encoding_aes_key = kwargs.get('encoding_aes_key')
         self.__crypto = None
         self._update_crypto()
@@ -193,7 +195,7 @@ class WechatConf(object):
         """
         根据当前配置内容更新 Crypto 类
         """
-        if self.__encoding_aes_key is not None:
+        if self.__encrypt_mode in ['compatible', 'safe'] and self.__encoding_aes_key is not None:
             if self.__token is None or self.__appid is None:
                 raise NeedParamError('Please provide token and appid parameters in the construction of class.')
             self.__crypto = BasicCrypto(self.__token, self.__encoding_aes_key, self.__appid)

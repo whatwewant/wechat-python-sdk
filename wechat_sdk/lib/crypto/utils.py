@@ -14,6 +14,7 @@ def get_sha1_signature(token, timestamp, nonce, encrypt):
     @param nonce: 随机字符串
     @return: 安全签名
     """
+
     try:
         sortlist = [token, timestamp, nonce, encrypt]
         sortlist.sort()
