@@ -33,42 +33,42 @@ class CoreConfTestCase(unittest.TestCase):
     fixtures_jsapi_ticket = 'bxLdikRXVbTPdHSM05e5u5sUoXNKd8-41ZO3MhKoyN5OfkWITDGgnr2fwJ0m9E8NYzWKVZvdVtaUgWvsdshFKA'
 
     normal_request_message = """<xml>
-<ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
-<FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
-<CreateTime>1442129896</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[xxx]]></Content>
-<MsgId>6193900740131666054</MsgId>
-</xml>"""
+    <ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
+    <FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
+    <CreateTime>1442129896</CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[xxx]]></Content>
+    <MsgId>6193900740131666054</MsgId>
+    </xml>"""
     compatible_request_message = """<xml>
-<ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
-<FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
-<CreateTime>1442129896</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[xxx]]></Content>
-<MsgId>6193900740131666054</MsgId>
-<Encrypt><![CDATA[JCqIUfe7GJ84SQdp7M4y2xrnsqUp9ihcNZrAErcA8KSc5ewTAYCX1CtAiZqntANyYmFdQqwNAQXMU3vQGbJms/rXSjz4vN77kc9SbIDphNKRYXyaEI5P8iuQHlAjyfUE2kXnWjusYEPnKaB5RLkanwbNwhWVzgYbV4OVst9hSMepv3WpVzOBZlj8CpqhklqwHJuOda4X7unQzwRWyLA8M/lzPDCdN3rcRqz2wH9SlEc0JfjKXKk1RmBFYhHbJ2boeLFc7dIg0Sc3JNMCBw7MU4tBWAEuD+wedUSy45zZ0u1HeQSe13d6QSlVOoC9Ta0InwnlL28VpngEMru4YGeDGoyRKgDOYbDr71dI0sp/kInAKwPXWbOcqd0LFQ9P9Y+BxW4z5BNkYo9LFubXbilnO/VzU8++zuAhFSED11baYFs=]]></Encrypt>
-</xml>"""
+    <ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
+    <FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
+    <CreateTime>1442129896</CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[xxx]]></Content>
+    <MsgId>6193900740131666054</MsgId>
+    <Encrypt><![CDATA[JCqIUfe7GJ84SQdp7M4y2xrnsqUp9ihcNZrAErcA8KSc5ewTAYCX1CtAiZqntANyYmFdQqwNAQXMU3vQGbJms/rXSjz4vN77kc9SbIDphNKRYXyaEI5P8iuQHlAjyfUE2kXnWjusYEPnKaB5RLkanwbNwhWVzgYbV4OVst9hSMepv3WpVzOBZlj8CpqhklqwHJuOda4X7unQzwRWyLA8M/lzPDCdN3rcRqz2wH9SlEc0JfjKXKk1RmBFYhHbJ2boeLFc7dIg0Sc3JNMCBw7MU4tBWAEuD+wedUSy45zZ0u1HeQSe13d6QSlVOoC9Ta0InwnlL28VpngEMru4YGeDGoyRKgDOYbDr71dI0sp/kInAKwPXWbOcqd0LFQ9P9Y+BxW4z5BNkYo9LFubXbilnO/VzU8++zuAhFSED11baYFs=]]></Encrypt>
+    </xml>"""
     safe_request_message = """<xml>
-<ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
-<Encrypt><![CDATA[JCqIUfe7GJ84SQdp7M4y2xrnsqUp9ihcNZrAErcA8KSc5ewTAYCX1CtAiZqntANyYmFdQqwNAQXMU3vQGbJms/rXSjz4vN77kc9SbIDphNKRYXyaEI5P8iuQHlAjyfUE2kXnWjusYEPnKaB5RLkanwbNwhWVzgYbV4OVst9hSMepv3WpVzOBZlj8CpqhklqwHJuOda4X7unQzwRWyLA8M/lzPDCdN3rcRqz2wH9SlEc0JfjKXKk1RmBFYhHbJ2boeLFc7dIg0Sc3JNMCBw7MU4tBWAEuD+wedUSy45zZ0u1HeQSe13d6QSlVOoC9Ta0InwnlL28VpngEMru4YGeDGoyRKgDOYbDr71dI0sp/kInAKwPXWbOcqd0LFQ9P9Y+BxW4z5BNkYo9LFubXbilnO/VzU8++zuAhFSED11baYFs=]]></Encrypt>
-</xml>"""
+    <ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
+    <Encrypt><![CDATA[JCqIUfe7GJ84SQdp7M4y2xrnsqUp9ihcNZrAErcA8KSc5ewTAYCX1CtAiZqntANyYmFdQqwNAQXMU3vQGbJms/rXSjz4vN77kc9SbIDphNKRYXyaEI5P8iuQHlAjyfUE2kXnWjusYEPnKaB5RLkanwbNwhWVzgYbV4OVst9hSMepv3WpVzOBZlj8CpqhklqwHJuOda4X7unQzwRWyLA8M/lzPDCdN3rcRqz2wH9SlEc0JfjKXKk1RmBFYhHbJ2boeLFc7dIg0Sc3JNMCBw7MU4tBWAEuD+wedUSy45zZ0u1HeQSe13d6QSlVOoC9Ta0InwnlL28VpngEMru4YGeDGoyRKgDOYbDr71dI0sp/kInAKwPXWbOcqd0LFQ9P9Y+BxW4z5BNkYo9LFubXbilnO/VzU8++zuAhFSED11baYFs=]]></Encrypt>
+    </xml>"""
 
     response_message = """<xml>
-<ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
-<FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
-<CreateTime>1442129896</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[测试消息]]></Content>
-<MsgId>6193900740131666054</MsgId>
-</xml>"""
+    <ToUserName><![CDATA[gh_1b2959761a7d]]></ToUserName>
+    <FromUserName><![CDATA[oJNCEjt3uIphaC1DrpB030QxMV_w]]></FromUserName>
+    <CreateTime>1442129896</CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[测试消息]]></Content>
+    <MsgId>6193900740131666054</MsgId>
+    </xml>"""
     response_encrypted_message = """<xml>
-<Encrypt><![CDATA[zbi1Qr2Z1DCHis273Aj4EN5FJ3vkxi43wmJugm8Z6F/HO1pVMukPP4IDPUOzVhhIiyDPFkCqOuPZsf13WmlzldS19cArcK/4gL+1Vizq2aiq73ma8TsXM3MHmFnlxT95ES1bBYRl/Pd2lHly6tgo16jXiCngw19/I05WIh4gz/pUgXnlP96ue1Gx3B4wANtw1p2mzmHZ7WecCfPGQ1V7RzJesdWs2ekiURtiAhVAxcKleaSGloN3x0nrEscfpUMy/55AAYfNi/SD8/+cuBoEENCsltEftgtSvJMzHqpBWI69zQEBAKQSAmH11YHUXaJIAYS7zsbGN4qVNvIfllKIElVVGpBlDxpJKK9pImL2tVmf1TelBvmkgvQSLDGG0ElM3DqoWEn/FZ2txsrsP51vKEeUC9dk+hHvl0s2DhvWFKU=]]></Encrypt>
-<MsgSignature><![CDATA[42ac896c4783653e9913f804685936cd2800f728]]></MsgSignature>
-<TimeStamp>1442129896</TimeStamp>
-<Nonce><![CDATA[1641605039]]></Nonce>
-</xml>
-"""
+    <Encrypt><![CDATA[manHcaGm3P7cOzkyWaigw1nNiIohhn3S7xogsE0ftGFIWncP56fLoI8oVv5HS8D44X5EuQjS+/0rGMNDblrdiiflGzrTjv1CtyT0jEYsgSdPCPFvGf/pOv+timCn+YAQDby0vSxzdJ3WKQB7kubElnxVrQUTIKfe4YKSxaGuhr4m6O7C6YH2uEGaZYQyUeuq5GVPcd9ZS45YOFzAxOyK8mWp7tCkuItqt5hElZ6dMaFOnp6cEGN7113ONtPSS2US7thd9u0+EVuiNEvuF5ErqJtc0saBK18LL/PeZ1xH1ZI6ZQZiQiX3uSeQ7SUDzOCNPV0BZ9NCdOnhHwKGS/F5PkU/sG0LsZVkobeBYApOTS0MY3Da/UVR3Zznr0Enab4YM4VjGdNBclBdkbukT/t/cYQaha0zGrYpOpzqNOQpxSuM5jB/lSQo6B+niT/PftLCR6J+hmRAXPbeVRZx1pJcUQ==]]></Encrypt>
+    <MsgSignature><![CDATA[e458c417d5aee4c3a9abed78da4020404e9b6cf9]]></MsgSignature>
+    <TimeStamp>1442129896</TimeStamp>
+    <Nonce><![CDATA[1641605039]]></Nonce>
+    </xml>
+    """
     signature = 'cc7c1221903889730bee4e92aba106a7bdb382f8'
     timestamp = 1442129896
     nonce = 1641605039
@@ -164,4 +164,3 @@ class CoreConfTestCase(unittest.TestCase):
         self.assertEqual(xmltodict.parse(resp), xmltodict.parse(self.response_encrypted_message))
         conf.crypto._WechatBaseCrypto__pc = origin_crypto
 
-    
