@@ -82,45 +82,55 @@ class WechatConf(object):
 
     @property
     def token(self):
+        """ 获取当前 Token """
         return self.__token
 
     @token.setter
     def token(self, token):
+        """ 设置当前 Token """
         self.__token = token
         self._update_crypto()  # 改动 Token 需要重新更新 Crypto
 
     @property
     def appid(self):
+        """ 获取当前 App ID """
         return self.__appid
 
     @appid.setter
     def appid(self, appid):
+        """ 设置当前 App ID """
         self.__appid = appid
         self._update_crypto()  # 改动 App ID 需要重新更新 Crypto
 
     @property
     def appsecret(self):
+        """ 获取当前 App Secret """
         return self.__appsecret
 
     @appsecret.setter
     def appsecret(self, appsecret):
+        """ 设置当前 App Secret """
         self.__appsecret = appsecret
 
     @property
     def encoding_aes_key(self):
+        """ 获取当前 EncodingAESKey """
         return self.__encoding_aes_key
 
     @encoding_aes_key.setter
     def encoding_aes_key(self, encoding_aes_key):
+        """ 设置当前 EncodingAESKey """
         self.__encoding_aes_key = encoding_aes_key
         self._update_crypto()  # 改动 EncodingAESKey 需要重新更新 Crypto
 
     @property
     def crypto(self):
+        """ 获取当前 Crypto 实例 """
         return self.__crypto
 
     @property
     def access_token(self):
+        """ 获取当前 access token 值, 本方法会自行维护 access token 有效性 """
         self._check_appid_appsecret()
 
         if callable(self.__access_token_getfunc):
@@ -135,6 +145,7 @@ class WechatConf(object):
 
     @property
     def jsapi_ticket(self):
+        """ 获取当前 jsapi ticket 值, 本方法会自行维护 jsapi ticket 有效性 """
         self._check_appid_appsecret()
 
         if callable(self.__jsapi_ticket_getfunc):
@@ -149,14 +160,17 @@ class WechatConf(object):
 
     @property
     def partnerid(self):
+        """ 获取当前财付通商户身份标识 """
         return self.__partnerid
 
     @property
     def partnerkey(self):
+        """ 获取当前财付通商户权限密钥 Key """
         return self.__partnerkey
 
     @property
     def paysignkey(self):
+        """ 获取商户签名密钥 Key """
         return self.__paysignkey
 
     def _check_token(self):
