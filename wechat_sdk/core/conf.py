@@ -157,7 +157,7 @@ class WechatConf(object):
             now = time.time()
             if self.__jsapi_ticket_expires_at - now > 60:
                 return self.__jsapi_ticket
-        self._grant_jsapi_ticket()
+        self._grant_jsapi_ticket()  # 从腾讯服务器获取 jsapi ticket 并更新
         return self.__jsapi_ticket
 
     @property
