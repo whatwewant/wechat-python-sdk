@@ -22,14 +22,13 @@ class WechatBasic(WechatBase):
 
     仅包含官方 API 中所包含的内容, 如需高级功能支持请移步 ext.py 中的 WechatExt 类
     """
-    def __init__(self, token=None, appid=None, appsecret=None,  partnerid=None, encoding_aes_key=None,
-                 partnerkey=None, paysignkey=None, access_token=None, access_token_expires_at=None,
-                 jsapi_ticket=None, jsapi_ticket_expires_at=None, checkssl=False):
+    def __init__(self, token=None, appid=None, appsecret=None,  partnerid=None, partnerkey=None, paysignkey=None,
+                 access_token=None, access_token_expires_at=None, jsapi_ticket=None, jsapi_ticket_expires_at=None,
+                 checkssl=False, conf=None):
         """
         :param token: 微信 Token
         :param appid: App ID
         :param appsecret: App Secret
-        :param encoding_aes_key: EncodingAESKey 值（传入此值必须保证同时传入 token, appid，否则报错)
         :param partnerid: 财付通商户身份标识, 支付权限专用
         :param partnerkey: 财付通商户权限密钥 Key, 支付权限专用
         :param paysignkey: 商户签名密钥 Key, 支付权限专用
@@ -38,6 +37,7 @@ class WechatBasic(WechatBase):
         :param jsapi_ticket: 直接导入的 jsapi_ticket 值, 该值需要在上一次该类实例化之后手动进行缓存并在此处传入, 如果不传入, 将会在需要时自动重新获取
         :param jsapi_ticket_expires_at: 直接导入的 jsapi_ticket 的过期日期，该值需要在上一次该类实例化之后手动进行缓存并在此处传入, 如果不传入, 将会在需要时自动重新获取
         :param checkssl: 是否检查 SSL, 默认为 False, 可避免 urllib3 的 InsecurePlatformWarning 警告
+        :param conf: WechatConf 配置类, 提供此参数将默认忽略其他所有参数, 所有数据均从此配置类中获取
         """
         if not checkssl:
             disable_urllib3_warning()  # 可解决 InsecurePlatformWarning 警告
@@ -54,13 +54,7 @@ class WechatBasic(WechatBase):
         self.__jsapi_ticket = jsapi_ticket
         self.__jsapi_ticket_expires_at = jsapi_ticket_expires_at
 
-        self.__encoding_aes_key = None
-        self.__crypto = None
-        if encoding_aes_key:
-            if not token or not appid:
-                raise NeedParamError('Please provide token and appid parameters in the construction of class.')
-            self.__encoding_aes_key = encoding_aes_key
-            self.__crypto = BasicCrypto(self.__token, self.__encoding_aes_key, self.__appid)
+        self.__conf = conf
 
         self.__is_parse = False
         self.__message = None
